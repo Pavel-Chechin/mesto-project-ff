@@ -5,6 +5,7 @@ const cardTemplate = document
 
 //Функция создания карточки
 export function createCard(
+  currentUserId,
   cardData,
   handleDelete,
   handleLike,
@@ -22,6 +23,9 @@ export function createCard(
   cardTitle.textContent = cardData.name;
   likeCounter.textContent = cardData.numberLikes;
   cardElement.dataset.cardId = cardData._id;
+
+  cardData.isMine = cardData.owner._id === currentUserId;
+  cardData.isLiked = cardData.likes.some((like) => like._id === currentUserId);
 
   if (cardData.isMine) {
     deleteButton.addEventListener("click", () =>

@@ -68,9 +68,9 @@ function handleProfileFormSubmit(evt) {
   setSubmitButtonState(true, profileEditSubmit);
 
   editProfile(profileData)
-    .then(() => {
-      profileName.textContent = profileData.name;
-      profileDescription.textContent = profileData.about;
+    .then((updatedProfileData) => {
+      profileName.textContent = updatedProfileData.name;
+      profileDescription.textContent = updatedProfileData.about;
       closePopup(profilePopupEdit);
     })
     .catch((err) => {
@@ -154,6 +154,7 @@ newCardForm.addEventListener("submit", (evt) => {
       cardData.numberLikes = 0;
 
       const newCard = createCard(
+        userId,
         cardData,
         handleDeleteCard,
         handleLike,
@@ -210,10 +211,9 @@ Promise.all(promises)
 
     cardsData.forEach((cardData) => {
       cardData.numberLikes = cardData.likes.length;
-      cardData.isMine = cardData.owner._id === userId;
-      cardData.isLiked = cardData.likes.some((like) => like._id === userId);
 
       const newCard = createCard(
+        userId,
         cardData,
         handleDeleteCard,
         handleLike,
